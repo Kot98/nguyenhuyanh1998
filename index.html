@@ -182,9 +182,9 @@ var ParticlePool = (function() {
  
   // creating the particle image using a dummy canvas
   var image = (function() {
-    var canvas = document.createElement('canvas'),
+    var canvas  = document.createElement('canvas'),
         context = canvas.getContext('2d');
-    canvas.width = settings.particles.size;
+    canvas.width  = settings.particles.size;
     canvas.height = settings.particles.size;
 
     // Function to generate random colors
@@ -213,6 +213,7 @@ var ParticlePool = (function() {
 
     // Function to update particle color continuously
     function updateParticleColor() {
+        context.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
         drawHeart();
         context.fillStyle = getRandomColor(); // Change color for each particle
         context.fill();
