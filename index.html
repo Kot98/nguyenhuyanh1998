@@ -188,10 +188,10 @@ var ParticlePool = (function() {
     canvas.height = settings.particles.size;
     // helper function to create the path
     function to(t) {
-      var point = pointOnHeart(t);
-      point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
-      point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
-      return point;
+        var point = pointOnHeart(t);
+        point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
+        point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
+        return point;
     }
     // create the path
     context.beginPath();
@@ -199,19 +199,30 @@ var ParticlePool = (function() {
     var point = to(t);
     context.moveTo(point.x, point.y);
     while (t < Math.PI) {
-      t += 0.01; // baby steps!
-      point = to(t);
-      context.lineTo(point.x, point.y);
+        t += 0.01; // baby steps!
+        point = to(t);
+        context.lineTo(point.x, point.y);
     }
     context.closePath();
+    
+    // create an array of different colors
+    var galaxyColors = [
+        'hsl(220, 70%, 10%)', // Dark Blue
+        'hsl(300, 60%, 10%)', // Dark Purple
+        'hsl(40, 80%, 10%)',  // Dark Orange
+        // Add more colors as needed
+    ];
+
+    // choose a random color for each particle
+    context.fillStyle = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
+
     // create the fill
-    context.fillStyle = 'hsl(' + Math.floor(Math.random() * 360) + ', 70%, 10%)';
     context.fill();
     // create the image
     var image = new Image();
     image.src = canvas.toDataURL();
     return image;
-  })();
+})();
  
   // render that thing!
   function render() {
