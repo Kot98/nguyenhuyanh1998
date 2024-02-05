@@ -225,7 +225,7 @@ var ParticlePool = (function() {
     }
 
     // update particle color continuously with a time interval
-    setInterval(updateParticleColor, 1000); // Change color every second
+    setInterval(updateParticleColor, 100); // Change color every second
     var image = new Image();
     image.src = canvas.toDataURL();
     return image;
