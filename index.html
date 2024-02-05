@@ -182,50 +182,46 @@ var ParticlePool = (function() {
  
   // creating the particle image using a dummy canvas
   var image = (function() {
-    var canvas  = document.createElement('canvas'),
+    var canvas = document.createElement('canvas'),
         context = canvas.getContext('2d');
-    canvas.width  = settings.particles.size;
+    canvas.width = settings.particles.size;
     canvas.height = settings.particles.size;
-    // helper function to create the path
-    function to(t) {
-        var point = pointOnHeart(t);
-        point.x = settings.particles.size / 2 + point.x * settings.particles.size / 350;
-        point.y = settings.particles.size / 2 - point.y * settings.particles.size / 350;
-        return point;
+
+    // Function to generate random colors
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
     }
-    // create the path
-    context.beginPath();
-    var t = -Math.PI;
-    var point = to(t);
-    context.moveTo(point.x, point.y);
-    while (t < Math.PI) {
-        t += 0.01; // baby steps!
-        point = to(t);
-        context.lineTo(point.x, point.y);
+
+    // Function to draw heart path
+    function drawHeart() {
+        context.beginPath();
+        var t = -Math.PI;
+        var point = to(t);
+        context.moveTo(point.x, point.y);
+        while (t < Math.PI) {
+            t += 0.01; // baby steps!
+            point = to(t);
+            context.lineTo(point.x, point.y);
+        }
+        context.closePath();
     }
-    context.closePath();
-    
+
+    // Function to update particle color continuously
     function updateParticleColor() {
-        // create an array of different colors
-        var galaxyColors = [
-            'rgba(255, 0, 0, 0.5)',   // Red with transparency
-            'rgba(0, 255, 0, 0.5)',   // Green with transparency
-            'rgba(0, 0, 255, 0.5)',   // Blue with transparency
-            'rgba(255, 255, 0, 0.5)', // Yellow with transparency
-            'rgba(255, 0, 255, 0.5)', // Magenta with transparency
-            'rgba(0, 255, 255, 0.5)', // Cyan with transparency
-            // Add more colors as needed
-        ];
-
-        // choose a random color for each particle
-        context.fillStyle = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
-
-        // create the fill
+        drawHeart();
+        context.fillStyle = getRandomColor(); // Change color for each particle
         context.fill();
     }
 
-    // update particle color continuously with a time interval
-    setInterval(updateParticleColor, 100); // Change color every second
+    // Update particle color continuously with a time interval
+    setInterval(updateParticleColor, 100); // Change color every 100 milliseconds
+
+    // Create the image
     var image = new Image();
     image.src = canvas.toDataURL();
     return image;
