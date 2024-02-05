@@ -205,23 +205,27 @@ var ParticlePool = (function() {
     }
     context.closePath();
     
-    // create an array of different colors
-    var galaxyColors = [
-        'rgba(255, 0, 0, 0.5)',   // Red with transparency
-        'rgba(0, 255, 0, 0.5)',   // Green with transparency
-        'rgba(0, 0, 255, 0.5)',   // Blue with transparency
-        'rgba(255, 255, 0, 0.5)', // Yellow with transparency
-        'rgba(255, 0, 255, 0.5)', // Magenta with transparency
-        'rgba(0, 255, 255, 0.5)', // Cyan with transparency
-        // Add more colors as needed
-    ];
+    function updateParticleColor() {
+        // create an array of different colors
+        var galaxyColors = [
+            'rgba(255, 0, 0, 0.5)',   // Red with transparency
+            'rgba(0, 255, 0, 0.5)',   // Green with transparency
+            'rgba(0, 0, 255, 0.5)',   // Blue with transparency
+            'rgba(255, 255, 0, 0.5)', // Yellow with transparency
+            'rgba(255, 0, 255, 0.5)', // Magenta with transparency
+            'rgba(0, 255, 255, 0.5)', // Cyan with transparency
+            // Add more colors as needed
+        ];
 
-    // choose a random color for each particle
-    context.fillStyle = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
+        // choose a random color for each particle
+        context.fillStyle = galaxyColors[Math.floor(Math.random() * galaxyColors.length)];
 
-    // create the fill
-    context.fill();
-    // create the image
+        // create the fill
+        context.fill();
+    }
+
+    // update particle color continuously with a time interval
+    setInterval(updateParticleColor, 1000); // Change color every second
     var image = new Image();
     image.src = canvas.toDataURL();
     return image;
